@@ -5,3 +5,49 @@
 - java printf
 
 - ex04
+
+
+
+
+
+
+
+int j = 0;
+        // while (j < listOfStudents.length) {
+        //     System.out.println(listOfStudents[j]);
+        //     j++;
+        // }
+
+
+
+
+        // System.out.println();
+        // j = 0;
+        // while (j < listOfStudents.length) {
+        //     System.out.println("days: " + days[j] + " times: " + times[j] );
+        //     j++;
+        // }
+
+
+        int time = toDigit(splitedStr[0]);
+            
+            if (time < 1 || time > 6 ) 
+                System.exit(-1);
+            
+            String day = splitedStr[1];
+           
+            indexOfDay = checkDays(day);
+            if(indexOfDay == 0)
+            {
+                System.exit(-1);
+            }
+            
+            if (isDuplicateClass(indexOfDay, time , i))
+            {
+                System.exit(-1);
+            }
+
+            days[i] = indexOfDay;
+            times[i] = (short)time;
+
+            System.out.print("-> ");
