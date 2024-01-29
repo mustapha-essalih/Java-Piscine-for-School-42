@@ -5,10 +5,13 @@ import java.util.Scanner;
  */
 public class Program {
 
+
     private static int numberOfStudents;
     private static String[] listOfStudents;
     private static boolean[][] classes;
     private static int[][][] attendance;
+    private static   String[] daysOfWeek = {"MO" , "TU" , "WE" , "TH" , "FR" , "SA" , "SU"};
+        
 
     public static void main(String[] args) {
         
@@ -17,7 +20,46 @@ public class Program {
         getClasses();
 
         createAttendance();
+        // split by scanner
+        printTable();
+    }
+
+
+    private static void printTable()
+    {
+        // time
+        // string day
+        // date
+        System.out.printf("%10s", " ");
+        for (int i = 0; i < classes.length; i++) 
+        {
+            for (int j = 0; j < classes[j].length; j++) 
+            {
+                if (classes[i][j] == true) 
+                {
+                    System.out.printf("%1d:00%3s%3d|", j , getDayFromIndex(i % 7) , i );
+                }    
+            }    
+        }
+        System.out.println();
         
+        for (int i = 0; i < listOfStudents.length; i++) 
+        {
+            System.out.printf("%10s" , listOfStudents[i]);
+            for (int j = 0; j < classes.length; j++) 
+            {
+                for (int x = 0; x < classes[j].length; x++) 
+                {
+                    if (classes[j][x] == true) 
+                    {
+                        System.out.printf("%10d|" , attendance[j][x][i]);
+                    }    
+                }    
+            }
+            System.out.println();
+
+        }
+
     }
 
     private static void createAttendance()
@@ -26,7 +68,7 @@ public class Program {
 
         attendance = new int[30][6][numberOfStudents];
         
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in); // split by scanner
 
         System.out.print("-> ");
         while (!(input = scanner.nextLine()).equals(".")) 
@@ -46,6 +88,7 @@ public class Program {
             int date = checkIfDayIsExistInWeek(toDigit(splitedInput[2]) , time);
             int status = getStatus(splitedInput[3]);
             
+
             while (indexOfStudnet == -1 || time == -1 || date == -1 || status == 0 ) 
             {
                 System.out.println("attence input not correct");
@@ -74,47 +117,45 @@ public class Program {
                     //     30days 6h
         classes = new boolean[30][6];
         // loop on 4 weeks
+        System.out.print("-> ");
 
-        for (int i = 0; i < 4; i++) 
+        int numberOfClasses = 0;
+        while (!(input = scanner.nextLine()).equals(".")) 
         {
-            for (int j = 0; j < 10; j++) // 10 class peer week
-            {
+            String[] splitedStr = splitString(input , 2);
+    
+            while (splitedStr == null) {
+                System.out.println("enter 2 args.");
                 System.out.print("-> ");
-                input = scanner.nextLine();    
+                input = scanner.nextLine();
+                splitedStr = splitString(input, 2);
+            }
+            int time = getTime(splitedStr[0]);
+            
+            int indexOfDay = getIndexOfDay(splitedStr[1]);
+    
+            while (time == -1 || indexOfDay == -1) 
+            {
+                System.out.println("error in time or day");
+                System.out.print("-> ");
+                input = scanner.nextLine();
                 if (input.equals(".")) 
                     return ;
-
-                String[] splitedStr = splitString(input , 2);
-
-                while (splitedStr == null) {
-                    System.out.println("enter 2 args.");
-                    System.out.print("-> ");
-                    input = scanner.nextLine();
-                    splitedStr = splitString(input, 2);
-                }
-                int time = getTime(splitedStr[0]);
-                
-                int indexOfDay = getIndexOfDay(splitedStr[1]);
-
-                while (time == -1 || indexOfDay == -1) 
-                {
-                    System.out.println("error in time or day");
-                    System.out.print("-> ");
-                    input = scanner.nextLine();
-                    if (input.equals(".")) 
-                        return ;
-                    splitedStr = splitString(input , 2);
-                    time = getTime(splitedStr[0]);
-                    indexOfDay = getIndexOfDay(splitedStr[1]);
-                }
-                
-                fillClasses(time , indexOfDay);
-            }    
+                splitedStr = splitString(input , 2);
+                time = getTime(splitedStr[0]);
+                indexOfDay = getIndexOfDay(splitedStr[1]);
+            }
+            
+            numberOfClasses = fillClasses(time , indexOfDay , numberOfClasses);
+            if(numberOfClasses == 10)
+                break;
+            System.out.print("-> ");
         }
 
+       
     }
 
-    private static void fillClasses(int time , int indexOfDay)
+    private static int fillClasses(int time , int indexOfDay , int numberOfClasses)
     {
         // start of the month is TU is 1
         // get first day in moth entered by user : MO , so monday her calue is 7 
@@ -138,9 +179,14 @@ public class Program {
                 break ;
             }
             else    
+            {
                 classes[i][time - 1] = true;   
+                 
+                numberOfClasses++;
+            }
         }
-
+        
+        return numberOfClasses;
     }
 
     private static void getListOfStudents() 
@@ -169,7 +215,7 @@ public class Program {
         }
         if (numberOfStudents == 10) {
             System.out.println(".");
-         }
+        }
     }
 
     private static boolean includeEspace(String input) {
@@ -289,25 +335,16 @@ public class Program {
 
     private static int getIndexOfDay(String day)
     {
-        switch (day) 
-        {
-            case "MO":
-                return 0;
-            case "TU":
-                return 1;
-            case "WE":
-                return 2;
-            case "TH":
-                return 3;
-            case "FR":
-                return 4;
-            case "SA":
-                return 5;
-            case "SU":
-                return 6;
-            default:
-                return -1;
+        for (int i = 0; i < daysOfWeek.length; i++) {
+            if (day.equals(daysOfWeek[i])) {
+                return i;
+            }
         }
+        return -1;
+    }
+    private static String getDayFromIndex(int indexOfDay)
+    {
+        return daysOfWeek[indexOfDay];
     }
     private static boolean isDigit(char ch) {
         return ch >= '0' && ch <= '9';
@@ -318,7 +355,7 @@ public class Program {
         if (status.equals("HERE")) {
             return 1;
         }
-        else if (status.equals("NOT HERE")) {
+        else if (status.equals("NOT_HERE")) {
             return -1;
         }
         return 0;
