@@ -43,34 +43,30 @@ public class Program {
             String studentName = splitedInput[0];
             int indexOfStudnet = getIndexOfStudent(studentName);
             int time = getTime(splitedInput[1]);
-            int day = getIndexOfDay(splitedInput[2]);
+            int date = checkIfDayIsExistInWeek(toDigit(splitedInput[2]) , time);
             int status = getStatus(splitedInput[3]);
-
-            while (indexOfStudnet == -1) 
+            
+            while (indexOfStudnet == -1 || time == -1 || date == -1 || status == 0 ) 
             {
-                System.out.println("student not found");
+                System.out.println("attence input not correct");
+                
                 System.out.print("-> ");
                 input = scanner.nextLine();
                 if (input.equals(".")) 
                     return ;
                 splitedInput = splitString(input, 4);
-                indexOfStudnet = getIndexOfStudent(studentName);
+                indexOfStudnet = getIndexOfStudent(splitedInput[0]);
+                time = getTime(splitedInput[1]);
+                date = checkIfDayIsExistInWeek(toDigit(splitedInput[2]) , time);
+                status = getStatus(splitedInput[3]);
             }
-            System.out.println("HERE");
-            
-        }
-
-
-        
-        
-        
-
-        for (int i = 0; i < attendance.length; i++) {
-            
+            System.out.print("-> ");
+            attendance[date - 1][time - 1][indexOfStudnet] = status;
         }
 
     }
 
+     
     private static void getClasses()
     {
         Scanner scanner = new Scanner(System.in);
@@ -198,7 +194,6 @@ public class Program {
         if (wordCount == 1) {
             return null;
         }        
-        System.out.println(wordCount);
         if (flag == 2 && wordCount > 2) 
         {
             return null;
@@ -242,6 +237,15 @@ public class Program {
        }
        wordsArray[arrayIndex] = new String(lastWordArray);
        return wordsArray;
+    }
+
+    private static int checkIfDayIsExistInWeek(int date , int time)
+    {
+        if (classes[date - 1][time - 1] == true) 
+        {
+            return date - 1;     
+        }
+        return -1;
     }
 
     private static int toDigit(String str) {
