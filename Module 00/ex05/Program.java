@@ -5,249 +5,234 @@ import java.util.Scanner;
  */
 public class Program {
 
-    private static short len;
-    private static short[] days;
-    private static short[] times;
-    private static short[] indexOfStudent;
-    private static int[][] attenceTable;
+    private static int numberOfStudents;
+    private static String[] listOfStudents;
+    private static boolean[][] classes;
+    private static int[][][] attendance;
+
     public static void main(String[] args) {
         
-        String[] listOfStudents = getListOfStudents();
-         
-        short numberOfStudents = len;
+        getListOfStudents();
+        
+        getClasses();
 
-        populatingTimetable();
- 
-        short numberOfClasses = len;
-        
-        implAttendance(numberOfStudents , numberOfClasses ,listOfStudents);
-        
-      
-        
+        createAttendance();
         
     }
 
-    // -> Mike 2 1 NOT_HERE MO = 1
-    // -> John 4 5 HERE    FR = 5
-    // -> Mike 4 5 HERE     FR = 5
-
-    // cehck if user is exist
-    // check if time and date exist
-    // check status if writing correct
-    // register the student attence
-
-    private static void implAttendance(short numberOfStudents, short numberOfClasses , String[] listOfStudents) {
-        
+    private static void createAttendance()
+    {
         String input;
-        int i;
-        
-        attenceTable = new int[numberOfStudents][packNumbers(6 , 31)];
 
-        i = 0;
+        attendance = new int[30][6][numberOfStudents];
+        
         Scanner scanner = new Scanner(System.in);
+
         System.out.print("-> ");
-        while (!(input = scanner.nextLine()).equals(".") && i < 10)  
+        while (!(input = scanner.nextLine()).equals(".")) 
         {
-            String[] splitedInput = splitString(input , 4);
-            String name = splitedInput[0];
-            int time = toDigit(splitedInput[1]);
-            int day = toDigit(splitedInput[2]);
-            
-            if(checkIfExists(name , listOfStudents , (short)time , day , numberOfClasses , numberOfStudents) == false)
-                System.exit(-1);
-            
-            int status = getAttendanceStatus(splitedInput[3]);
-            
-            int studentIndex = getStudentIndex(numberOfStudents ,listOfStudents , name);
-            int dayAndTime = packNumbers(time , day);
-            attenceTable[studentIndex][dayAndTime] = status;
-            System.out.println(attenceTable[studentIndex][dayAndTime]);
-            System.out.print("-> ");
-            i++;
-        }
+            String[] splitedInput = splitString(input, 4);
 
-
-        
-
-    }
-
-
-
-    private static int getStudentIndex(short numberOfStudents , String[] listOfStudents , String name ) {
-        
-        for (int i = 0; i < numberOfStudents; i++) {
-            if (listOfStudents[i] == name) {
-                return i;
+            while (splitedInput[0] == null) {
+                System.out.println("enter 4 args.");
+                System.out.print("-> ");
+                input = scanner.nextLine();
+                splitedInput = splitString(input, 4);
             }
-        }
-        return 0;
-    }
 
-    private static void populatingTimetable() {
-        
-        short indexOfDay; 
-        len = 0;
-        days = new short[10];
-        times = new short[10];
-        
-        String input;
-        int i;
-        
-        i = 0;
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("-> ");
-        while (!(input = scanner.nextLine()).equals(".") && i < 10)  
-        {
-            String[] splitedStr = splitString(input , 2);
-            
-            int time = toDigit(splitedStr[0]);
-            
-            if (time < 1 || time > 6 ) 
-                System.exit(-1);
-            
-            String day = splitedStr[1];
-           
-            indexOfDay = checkDays(day);
-            if(indexOfDay == 0)
+            String studentName = splitedInput[0];
+            int indexOfStudnet = getIndexOfStudent(studentName);
+            int time = getTime(splitedInput[1]);
+            int day = getIndexOfDay(splitedInput[2]);
+            int status = getStatus(splitedInput[3]);
+
+            while (indexOfStudnet == -1) 
             {
-                System.exit(-1);
+                System.out.println("student not found");
+                System.out.print("-> ");
+                input = scanner.nextLine();
+                if (input.equals(".")) 
+                    return ;
+                splitedInput = splitString(input, 4);
+                indexOfStudnet = getIndexOfStudent(studentName);
             }
+            System.out.println("HERE");
             
-            if (isDuplicateClass(indexOfDay, time , i))
-            {
-                System.exit(-1);
-            }
-
-            days[i] = indexOfDay;
-            times[i] = (short)time;
-
-            System.out.print("-> ");
-            i++;
-            len++;
         }
 
-     }
- 
 
+        
+        
+        
 
-    private static short checkDays(String day) {
-        switch (day) 
-        {
-            case "MO":
-                return 1;
-            case "TU":
-                return 2;
-            case "WE":
-                return 3;
-            case "TH":
-                return 4;
-            case "FR":
-                return 5;
-            case "SA":
-                return 6;
-            case "SU":
-                return 7;
-            default:
-                return 0;
+        for (int i = 0; i < attendance.length; i++) {
+            
         }
 
     }
 
-    private static boolean isDuplicateClass(short indexOfDay, int time , int size) {
-        for (int i = 0; i < size; i++) {
-            if (days[i] == indexOfDay && times[i] == time)
-                return true;
-        }
-        return false;
-    }
-
-    private static String[] getListOfStudents() 
+    private static void getClasses()
     {
         Scanner scanner = new Scanner(System.in);
         String input;
-        int i;
-        String[] listOfStudents;
+                    //     30days 6h
+        classes = new boolean[30][6];
+        // loop on 4 weeks
 
-        i = 0;
-        listOfStudents = new String[10];
-        indexOfStudent = new short[10];
-        len = 0;
-
-        System.out.print("-> ");
-        while (!(input = scanner.nextLine()).equals(".") && i < 10)  
+        for (int i = 0; i < 4; i++) 
         {
-            if(input.length() > 10 || includeEspace(input))
+            for (int j = 0; j < 10; j++) // 10 class peer week
             {
-                scanner.close();
-                System.exit(-1);
-            }
-            listOfStudents[i] = input;
-            indexOfStudent[i] = (short)i;
-            i++;
-            len++;
-            System.out.print("-> ");
+                System.out.print("-> ");
+                input = scanner.nextLine();    
+                if (input.equals(".")) 
+                    return ;
+
+                String[] splitedStr = splitString(input , 2);
+
+                while (splitedStr == null) {
+                    System.out.println("enter 2 args.");
+                    System.out.print("-> ");
+                    input = scanner.nextLine();
+                    splitedStr = splitString(input, 2);
+                }
+                int time = getTime(splitedStr[0]);
+                
+                int indexOfDay = getIndexOfDay(splitedStr[1]);
+
+                while (time == -1 || indexOfDay == -1) 
+                {
+                    System.out.println("error in time or day");
+                    System.out.print("-> ");
+                    input = scanner.nextLine();
+                    if (input.equals(".")) 
+                        return ;
+                    splitedStr = splitString(input , 2);
+                    time = getTime(splitedStr[0]);
+                    indexOfDay = getIndexOfDay(splitedStr[1]);
+                }
+                
+                fillClasses(time , indexOfDay);
+            }    
         }
-        return listOfStudents;
+
     }
 
-    
+    private static void fillClasses(int time , int indexOfDay)
+    {
+        // start of the month is TU is 1
+        // get first day in moth entered by user : MO , so monday her calue is 7 
+        // index of monday in week is 0
+        
+        // we search for index of day entered by user in table to fill all days in  month 
+
+        int startDayOfMonth = 1; // TU it is the start day in septembere 2020
+        int firstDayOfMonth;
+        
+        if (indexOfDay > startDayOfMonth) 
+            firstDayOfMonth = indexOfDay - startDayOfMonth; 
+        else
+            firstDayOfMonth = (indexOfDay + 7) - startDayOfMonth;
+        
+        for (int i = firstDayOfMonth; i < 30; i+=7) 
+        {
+            if(classes[i][time - 1] == true)
+            {
+                System.out.println("class alered created in day and this time.");
+                break ;
+            }
+            else    
+                classes[i][time - 1] = true;   
+        }
+
+    }
+
+    private static void getListOfStudents() 
+    {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+         
+        listOfStudents = new String[10];
+        numberOfStudents = 0;
+        System.out.print("-> ");
+        while (!(input = scanner.nextLine()).equals(".") && numberOfStudents < 10)  
+        {
+             
+            while(input.length() > 10 || input.length() == 0  || includeEspace(input))
+            {
+                System.out.print("-> ");
+                input = scanner.nextLine();
+                if (input.equals(".")) {
+                    return ;
+                }
+            }
+            listOfStudents[numberOfStudents] = input;
+             
+            numberOfStudents++;
+            System.out.print("-> ");
+        }
+        if (numberOfStudents == 10) {
+            System.out.println(".");
+         }
+    }
+
     private static boolean includeEspace(String input) {
         for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) == 32 || input.charAt(i) == 9) {
+            if (input.charAt(i) == 32) {
                 return true;
             }
         }
-
         return false;
     }
- 
-     
     private static String[] splitString(String input , int flag) {
          
         int wordCount = 1; // at least one word
-       for (int i = 0; i < input.length(); i++) {
-           if (input.charAt(i) == ' ') 
-           {
-               while (input.charAt(i) == ' ') 
-                   i++;
-               wordCount++;
-           }
-       }
-
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == ' ') 
+            {
+                while (input.charAt(i) == ' ') 
+                    i++;
+                wordCount++;
+            }
+        }
+        if (wordCount == 1) {
+            return null;
+        }        
+        System.out.println(wordCount);
         if (flag == 2 && wordCount > 2) 
         {
-         System.exit(-1);
+            return null;
         }
         if (flag == 4 && wordCount > 4) 
         {
-            System.exit(-1);
+            return null;
         }
-       String[] wordsArray = new String[wordCount];
+        String[] wordsArray = new String[wordCount];
 
-       int wordStartIndex = 0;
-       int arrayIndex = 0;
+        int wordStartIndex = 0;
+        int arrayIndex = 0;
 
-       for (int i = 0; i < input.length(); i++) {
-           if (input.charAt(i) == ' '  ) {
-               while (input.charAt(i) == ' ') 
-                   i++;
-               i--;
-               int wordLength = i - wordStartIndex;
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == ' '  ) {
+                while (input.charAt(i) == ' ') 
+                    i++;
+                i--;
+                int wordLength = i - wordStartIndex;
 
-               char[] currentWordArray = new char[wordLength];
-               
-               for (int j = 0; j < wordLength; j++) {
-                   currentWordArray[j] = input.charAt(wordStartIndex + j);
-                }
+                char[] currentWordArray = new char[wordLength];
+                
+                for (int j = 0; j < wordLength; j++) {
+                    currentWordArray[j] = input.charAt(wordStartIndex + j);
+                    }
 
-               wordsArray[arrayIndex] = new String(currentWordArray);
-               arrayIndex++;
+                wordsArray[arrayIndex] = new String(currentWordArray);
+                arrayIndex++;
 
-               wordStartIndex = i + 1;
-               while (input.charAt(i) == ' ' || input.charAt(i) == 9)
-                   i++; 
-           }
-       }
+                wordStartIndex = i + 1;
+                while (input.charAt(i) == ' ' || input.charAt(i) == 9)
+                    i++; 
+            }
+        }
 
        int lastWordLength = input.length() - wordStartIndex;
        char[] lastWordArray = new char[lastWordLength];
@@ -264,71 +249,74 @@ public class Program {
         int startIndex = 0;
         int result = 0;
 
+        
         for (int i = startIndex; i < str.length(); i++) {
             char digitChar = str.charAt(i);
-            if (Character.isDigit(digitChar)) {
-                int digitValue = digitChar - '0'; // Convert char to int value
+            if (isDigit(digitChar))  
+            {
+                int digitValue = digitChar - '0'; 
                 result = result * 10 + digitValue;
             } 
             else {
-                System.exit(-1);
+                return -1;
             }
         }
-
         return result;
     }
 
-    private static boolean checkIfExists(String name, String[] listOfStudents, short time , int day , short numberOfClasses , short numberOfStudents ) {
-
-        int i;
-
-        i = 0;
-        while ( i < numberOfStudents) {
-            if (listOfStudents[i].equals(name)) {
-                break;
-            }
-            i++;
+    private static int getIndexOfStudent(String name)
+    {
+        for (int i = 0; i < numberOfStudents; i++) {
+            if (listOfStudents[i].equals(name)) 
+                return i;    
         }
-        
-        if (i == numberOfStudents) // if student is exist or not 
-            System.exit(-1);
-        
-        if (time < 1 || time > 6 ) 
-            System.exit(-1);
-
-        if (day < 1 || day > 31) 
-            System.exit(-1);
-       
-
-        while (day > 7) {
-            day -= 7;
-        }
-        i = 0;
-        while ( i < numberOfClasses) 
-        {
-            if (days[i] == day && times[i] == time) 
-                return true;
-            i++;
-        }
-
-
-        return false;
-    }
-
-    private static int packNumbers(int firstNumber, int secondNumber) {
-        
-        // Use bit manipulation to pack the two numbers
-        return (firstNumber << 5) | secondNumber;
-    }
-
-    private static int getAttendanceStatus(String status) {
-        
-        if (!status.equals("NOT_HERE") && !status.equals("HERE")) 
-            System.exit(-1);
-        if (status.equals("HERE"))
-            return 1;
         return -1;
     }
 
-    
+    private static int getTime(String time)
+    {
+        int t;
+
+        t = toDigit(time);
+        if (t < 1 || t > 6 ) 
+            return -1;
+        return t;
+    }
+
+    private static int getIndexOfDay(String day)
+    {
+        switch (day) 
+        {
+            case "MO":
+                return 0;
+            case "TU":
+                return 1;
+            case "WE":
+                return 2;
+            case "TH":
+                return 3;
+            case "FR":
+                return 4;
+            case "SA":
+                return 5;
+            case "SU":
+                return 6;
+            default:
+                return -1;
+        }
+    }
+    private static boolean isDigit(char ch) {
+        return ch >= '0' && ch <= '9';
+    }
+
+    private static int  getStatus(String status)
+    {
+        if (status.equals("HERE")) {
+            return 1;
+        }
+        else if (status.equals("NOT HERE")) {
+            return -1;
+        }
+        return 0;
+    }
 }
