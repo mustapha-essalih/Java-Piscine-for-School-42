@@ -2,23 +2,40 @@ class Program{
  
     public static void main(String[] args) {
 
-        int number = 479598;
-        int res = 0;
-         res = getSum(number  , res);
-        System.out.println(res);
-    }
+        int res;
+        int number;
+        int temp;
 
-    private static int getSum(int number   , int res)
-    {
-        int sum;
-        if (number == 0)
-        {
-            return res;
-        }
-        sum = number % 10;
+        res = 0;
+        number = 479598;
+
+        temp = number % 10;
+        res += temp;
         number /= 10;
-        res += sum;
-        return getSum(number  , res);
+        
+
+        temp = number % 10;
+        res += temp;
+        number /= 10;
+
+
+        temp = number % 10;
+        res += temp;
+        number /= 10;
+
+        temp = number % 10;
+        res += temp;
+        number /= 10;
+
+        temp = number % 10;
+        res += temp;
+        number /= 10;
+        
+        temp = number % 10;
+        res += temp;
+        number /= 10;
+
+        System.out.println(res);
     }
 
 }
