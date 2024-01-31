@@ -129,6 +129,7 @@ public class Program {
             indexOfStudnet = getIndexOfStudent(nameOfStudent);
             status = getStatus(strStatus);
             
+             
             while (indexOfStudnet == -1 || time == -1 || date == -1 || status == 0 ) 
             {
                 inputClassesFromUser(splitedInput , scanner , 4);
@@ -137,7 +138,7 @@ public class Program {
                 indexOfStudnet = getIndexOfStudent(nameOfStudent);
                 status = getStatus(strStatus);
             }
-            attendance[date - 1][time - 1][indexOfStudnet] = status;
+            attendance[date][time - 1][indexOfStudnet] = status;
             System.out.print("-> ");
              
         }
@@ -150,15 +151,14 @@ public class Program {
         // index of monday in week is 0
         
         // we search for index of day entered by user in table to fill all days in  month 
-         
         int startDayOfMonth = 1; // TU it is the start day in septembere 2020
         int firstDayOfMonth;
         
-        if (indexOfDay > startDayOfMonth) 
+        if (indexOfDay >= startDayOfMonth) 
             firstDayOfMonth = indexOfDay - startDayOfMonth; 
         else
             firstDayOfMonth = (indexOfDay + 7) - startDayOfMonth;
-        
+         
         for (int i = firstDayOfMonth; i < 30; i+=7) 
         {
             if(classes[i][time - 1] == true)
@@ -201,9 +201,9 @@ public class Program {
                 {
                     if (classes[j][x] == true) 
                     {
-                        if (attendance[j - 1][x][i] == 1) 
+                        if (attendance[j][x][i] == 1) 
                             System.out.printf("%10s|", "1");
-                        else if (attendance[j - 1][x][i] == -1) 
+                        else if (attendance[j][x][i] == -1) 
                             System.out.printf("%10s|", "-1");
                         else 
                             System.out.printf("%10s|", " ");

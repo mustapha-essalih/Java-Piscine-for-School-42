@@ -7,3 +7,5 @@
 - Regular Expressions
 \\s+                 One or more occurrences of any white space character
 
+// 4:00 WE 2| 2:00 MO 7|4:00 WE 9|2:00 MO 14|4:00 WE 16|2:00 MO 21|4:00 WE 23|2:00 MO 28|2:00 MO 30|
+// 4:00 WE  2|2:00 MO  7|4:00 WE  9|2:00 MO 14|4:00 WE 16|2:00 MO 21|4:00 WE 23|2:00 MO 28|4:00 WE 30|
