@@ -14,9 +14,7 @@ class Program{
         String week;
         int weekNumber;
         
-        if (scanner.hasNext()) 
-        {
-            week = scanner.next();
+        week = scanner.next();
         
             int i = 0;
             int total = 0;
@@ -106,13 +104,9 @@ class Program{
             }
             
             
+            scanner.close();
         }
 
        
-        scanner.close();
-
-    }
-
-
 
 }

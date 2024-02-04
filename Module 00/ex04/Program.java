@@ -37,7 +37,6 @@ public class Program {
     {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("-> ");
         String input = scanner.nextLine();
 
         charsDetected = new int[65535]; // because we have 65535 in plane  The Basic Multilingual Plane (BMP) 
@@ -122,3 +121,5 @@ public class Program {
 
     }
 }
+
+
