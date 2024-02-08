@@ -55,6 +55,10 @@ public class Menu {
                     while (this.removeTransferByID() == false) {}
                     displayMenu();
                 }
+                else if(input == 6){
+                    this.checkTransferValidity();
+                    displayMenu();
+                }
             } 
             catch (Exception e) 
             {
@@ -63,6 +67,24 @@ public class Menu {
                 this.displayMenu();              
             }
         }
+    }
+
+    public void checkTransferValidity()
+    {
+        System.out.println("Check results:");
+        Transaction[] transactions = this.transactionsService.checkValidityOfTransactions();
+        
+        for (int i = 0; i < transactions.length; i++) {
+            System.out.println(transactions[i].getRecipient().getName() + "(id = " + 
+            transactions[i].getRecipient().getId() + " ) has an unacknowledged transfer id = " +
+            transactions[i].getIdentifier() + " from " + transactions[i].getSender().getName() + "(id = " + 
+            transactions[i].getSender().getId() + " ) for " + transactions[i].getTransferAmount() );
+        }
+
+        // Mike(id = 2) has an unacknowledged transfer id = 1fc852e7-914f-4bfd-913d-0313aab1ed99 from John(id =
+// 1) for 150
+        System.out.println("---------------------------------------------------------");
+
     }
 
     public boolean removeTransferByID() 
@@ -108,7 +130,7 @@ public class Menu {
 
             try {
                 Transaction[] allTransactionsForUser = this.transactionsService.getTransfersForUser(userId);
-                for(int i = 0; i < allTransactionsForUser.length ; i++)
+                for(int i = allTransactionsForUser.length - 1; i >= 0 ; i--)
                 {
                     System.out.println("To " + allTransactionsForUser[i].getRecipient().getName() + 
                     "(id = " +   allTransactionsForUser[i].getRecipient().getId() + ") -" + 

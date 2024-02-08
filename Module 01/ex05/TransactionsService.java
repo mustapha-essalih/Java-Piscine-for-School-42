@@ -97,7 +97,6 @@ public class TransactionsService {
             }
 
         }
-        unpairTransaction.displayTransaction();
         return unpairTransaction.transformTransactionToArray();
     }
 
