@@ -1,0 +1,11 @@
+// 
+
+
+        boolean transactionOfSEnder = new Transaction().makeTransaction(sender, recipient, TransferCategory.debits,  transferAmount , transactionId);
+        boolean transactionOfRecipent = new Transaction().makeTransaction(sender, recipient, TransferCategory.credits,  transferAmount , transactionId);
+        
+        if (transactionOfSEnder == false) 
+        {
+            invalidTransactions.addTransaction(sender.getTransactionsList());
+            return transactionId;
+        }

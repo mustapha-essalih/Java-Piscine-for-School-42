@@ -5,11 +5,11 @@ public class Program {
         
         User user1 = new User("mustapha" , 500);
         User user2 = new User("stof", 5000);
-        Transaction transaction1 = new Transaction(user1 , user2 , TransferCategory.debits , 500);
+        Transaction transaction1 = new Transaction(user1 , user2 , TransferCategory.debits , 500 );
         System.out.println(transaction1);
         Transaction transaction2 = new Transaction(user1 , user2 , TransferCategory.debits , 500);
         System.out.println(transaction2);
-        user1.setBalance(10);
+        
     }
 }
 

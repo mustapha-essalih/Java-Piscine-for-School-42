@@ -6,7 +6,7 @@ public class Transaction {
     private User recipient; 
     private User sender;
     private Integer transferAmount; // A numeric value representing the amount of money being transferred. It should be positive for incoming transactions and negative for outgoing transactions.
-
+    private TransferCategory transferCategory;
     
     
 
@@ -24,8 +24,10 @@ public class Transaction {
                     this.sender = sender;
                     this.recipient = recipient;
                     sender.setBalance(sender.getBalance() - transferAmount);
+                    
                     recipient.setBalance(recipient.getBalance() + transferAmount);
                     this.transferAmount = transferAmount;
+                    this.transferCategory = tCategory;
                 }
             }
         } 

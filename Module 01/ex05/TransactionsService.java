@@ -16,8 +16,9 @@ public class TransactionsService {
         usersList.addUser(user);
     }
     
-    public Integer getUserBalance(User user){
+    public Integer getUserBalance(Integer userId){
 
+        User user = usersList.retrieveUserByID(userId);
         return user.getBalance();
     }
     

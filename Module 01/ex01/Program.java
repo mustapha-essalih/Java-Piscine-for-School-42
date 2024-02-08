@@ -11,10 +11,4 @@ public class Program {
     }
 }
 
-
-
-
-
-
-// John -> Mike, -500, OUTCOME, transaction ID
-// Mike -> John, +500, INCOME, transaction ID
+ 

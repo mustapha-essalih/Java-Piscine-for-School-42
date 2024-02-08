@@ -6,7 +6,7 @@
 
 public class TransactionsLinkedList implements TransactionsList {
 
-    Node head;
+    private Node head;
     private Integer size = 0;
     
     @Override
