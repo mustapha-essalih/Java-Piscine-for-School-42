@@ -31,33 +31,35 @@ public class TransactionsLinkedList implements TransactionsList {
         
         // The list is empty, nothing to delete
         if (head == null) 
-            return;
+        {
+            throw new TransactionNotFoundException("tranascations is empty");
+        }
             
         // If the node to be deleted is the head
-        if (head.data.getIdentifier() == transactionId) {
+        if (head.data.getIdentifier().equals(transactionId)) {
             head = head.next;
             size--;
-            return;
+            return ;
         }
         
         // Search for the node with the specified value
         Node current = head;
         Node previous = null;
 
-        while (current != null && current.data.getIdentifier() != transactionId) {
+        while (current != null && !current.data.getIdentifier().equals(transactionId)) {
             previous = current;
             current = current.next;
         }
-
         // If the node with the specified value is found
         if (current != null) {
 
+            size--;
             previous.next = current.next;
+            return ;
         }
         else{
             throw new TransactionNotFoundException("transaction Id not found");
         }
-        size--;
     }
     
     @Override

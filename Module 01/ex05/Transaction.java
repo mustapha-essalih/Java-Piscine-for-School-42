@@ -11,24 +11,11 @@ public class Transaction {
     
     public Transaction(User sender , User recipient , TransferCategory tCategory, Integer transferAmount , String transactionId)
     {
-        if (recipient != null && sender != null && sender != recipient)
-        {
-            if (transferAmount <= sender.getBalance() && transferAmount > 0) 
-            {
-                this.identifier = transactionId;
-                this.sender = sender;
-                this.recipient = recipient;
-                this.transferAmount = transferAmount;
-                this.transferCategory = tCategory;
-                if (tCategory == TransferCategory.debits) 
-                    sender.setBalance(sender.getBalance() - transferAmount); // 0
-                else
-                    recipient.setBalance(recipient.getBalance() + transferAmount) ;// 500;
-            }
-            if (transferAmount > sender.getBalance() ) 
-                throw new TransactionFailException("transfer an amount exceeding user balance");
-        }
-        
+        this.identifier = transactionId;
+        this.sender = sender;
+        this.recipient = recipient;
+        this.transferAmount = transferAmount;
+        this.transferCategory = tCategory;
     } 
     
     public String getIdentifier() {

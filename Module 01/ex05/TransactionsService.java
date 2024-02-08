@@ -22,7 +22,7 @@ public class TransactionsService {
         return user.getBalance();
     }
     
-    public String performTransfer(int senderID, int recipientID, int transferAmount) {
+    public String performTransfer(Integer senderID, Integer recipientID, Integer transferAmount) {
         
         User sender = usersList.retrieveUserByID(senderID);
         User recipient = usersList.retrieveUserByID(recipientID);
@@ -33,6 +33,20 @@ public class TransactionsService {
         Transaction transactionOfSender = new Transaction(sender, recipient, TransferCategory.debits, transferAmount, transactionId);        
         Transaction transactionOfRecipent = new Transaction(sender, recipient, TransferCategory.credits, transferAmount, transactionId);        
 
+        if (transferAmount > sender.getBalance()) 
+        {
+            throw new TransactionFailException("transfer an amount exceeding user balance");
+        }
+        if (transferAmount < 0) {
+            throw new TransactionFailException("transfer Amount < 0");
+        }
+        if (sender.getId() == recipient.getId()) {
+            throw new TransactionFailException("cannot send to same user");
+        }
+
+        sender.setBalance(sender.getBalance() - transferAmount);
+        recipient.setBalance(recipient.getBalance() + transferAmount) ;
+        
         sender.getTransactions().addTransaction(transactionOfSender);
         recipient.getTransactions().addTransaction(transactionOfRecipent);
         return transactionId;
@@ -87,10 +101,10 @@ public class TransactionsService {
         return unpairTransaction.transformTransactionToArray();
     }
 
-    public void deleteTransactionByID(Integer userId , String transactionId)
+    public Transaction deleteTransactionByID(Integer userId , String transactionId)
     {
         User user = usersList.retrieveUserByID(userId);
-        user.getTransactions().removeTransactionById(transactionId);
+        return user.getTransactions().removeTransactionById(transactionId);
     }
 
     public UsersList getUsersList() {

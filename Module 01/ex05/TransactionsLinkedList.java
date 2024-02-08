@@ -26,38 +26,31 @@ public class TransactionsLinkedList implements TransactionsList {
     }
 
     @Override
-    public void removeTransactionById(String transactionId) {
+    public Transaction removeTransactionById(String transactionId) {
 
-        
-        // The list is empty, nothing to delete
-        if (head == null) 
-            return;
-            
-        // If the node to be deleted is the head
-        if (head.data.getIdentifier() == transactionId) {
-            head = head.next;
+        Node temp = head, prev = null;
+
+         
+        if (temp != null && temp.data.getIdentifier().equals(transactionId)) {
+            head = temp.next;
             size--;
-            return;
+            return temp.data;
+        }
+
+        while (temp != null && !temp.data.getIdentifier().equals(transactionId)) {
+            
+            prev = temp;
+            temp = temp.next;
+        }
+
+        if (temp == null)
+        {
+            throw new TransactionNotFoundException("Transaction Not Found.");
         }
         
-        // Search for the node with the specified value
-        Node current = head;
-        Node previous = null;
-
-        while (current != null && current.data.getIdentifier() != transactionId) {
-            previous = current;
-            current = current.next;
-        }
-
-        // If the node with the specified value is found
-        if (current != null) {
-
-            previous.next = current.next;
-        }
-        else{
-            throw new TransactionNotFoundException("transaction Id not found");
-        }
+        prev.next = temp.next;
         size--;
+        return temp.data;
     }
     
     @Override

@@ -20,11 +20,6 @@ public class Menu {
         this.getInput();
         
         this.displayMenu();
-        
-         
-        
-            
-        
 
     }
     
@@ -48,16 +43,129 @@ public class Menu {
                     while (this.viewUserBalances() == false) {}
                     displayMenu();
                 }
+                else if(input == 3){
+                    while (this.PerformTransfer() == false) {}
+                    displayMenu();
+                }
+                else if(input == 4){
+                    while (this.displayAllTransactionsForUser() == false) {}
+                    displayMenu();
+                }
+                else if(input == 5){
+                    while (this.removeTransferByID() == false) {}
+                    displayMenu();
+                }
             } 
             catch (Exception e) 
             {
+                System.out.println(e.getMessage());
                 System.out.println("ERROR");
                 this.displayMenu();              
             }
         }
     }
 
-    
+    public boolean removeTransferByID() 
+    {
+        System.out.println("Enter a user ID and a transfer ID");
+        
+        try {
+            scanner = new Scanner(System.in);
+            Integer userId = scanner.nextInt();
+            String transferId = scanner.next();
+            
+            try {
+                 
+                Transaction removedTransaction = transactionsService.deleteTransactionByID(userId, transferId);
+                
+                System.out.println("Transfer To " + removedTransaction.getRecipient().getName() + "(id = " + removedTransaction.getRecipient().getId() + ") " + removedTransaction.getTransferAmount() + " removed");
+                System.out.println("---------------------------------------------------------");
+                return true;
+            } catch (UserNotFoundException e) {
+                System.out.println(e);
+                return false;
+            }
+            catch (TransactionNotFoundException e) {
+                System.out.println(e);
+                return false;
+            }
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("ERROR");
+            return false;              
+        }
+
+    } 
+
+    public boolean displayAllTransactionsForUser()  
+    {
+        System.out.println("Enter a user ID");
+         
+        try {
+            scanner = new Scanner(System.in);
+            Integer userId = scanner.nextInt();
+
+            try {
+                Transaction[] allTransactionsForUser = this.transactionsService.getTransfersForUser(userId);
+                for(int i = 0; i < allTransactionsForUser.length ; i++)
+                {
+                    System.out.println("To " + allTransactionsForUser[i].getRecipient().getName() + 
+                    "(id = " +   allTransactionsForUser[i].getRecipient().getId() + ") -" + 
+                    allTransactionsForUser[i].getTransferAmount() + " with id = " +
+                       allTransactionsForUser[i].getIdentifier());
+                }        
+                System.out.println("-----------------------------------");
+               
+                return true;
+            } catch (UserNotFoundException e) {
+                System.out.println(e);
+                return false;
+            }
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("ERROR");
+            return false;              
+        }
+ 
+
+    }
+
+
+    public boolean  PerformTransfer()
+    {
+        System.out.println("Enter a sender ID, a recipient ID, and a transfer amount");
+        
+        try {
+            scanner = new Scanner(System.in);
+            Integer senderId = scanner.nextInt();
+            Integer recipiId = scanner.nextInt();
+            Integer transferAmount = scanner.nextInt();
+
+            try {
+                
+                this.transactionsService.performTransfer(senderId, recipiId, transferAmount);
+                System.out.println("The transfer is completed");
+                System.out.println("---------------------------------------------------------");
+                return true;
+            } catch (UserNotFoundException e) {
+                System.out.println(e);
+                return false;
+            }
+            catch (TransactionFailException e) {
+                System.out.println(e);
+                return false;
+            }
+
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("ERROR");
+            return false;              
+        }
+ 
+    } 
     public boolean viewUserBalances() throws UserNotFoundException
     {
         System.out.println("Enter a user ID");
@@ -85,10 +193,6 @@ public class Menu {
         }
         return true;
         
-        
-        // System.out.println(this.transactionsService.getUserBalance(userId ));
-
-        // System.out.println("---------------------------------------------------------");
     } 
 
     public boolean addUser()
