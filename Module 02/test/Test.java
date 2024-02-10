@@ -1,35 +1,66 @@
  
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+// import java.io.BufferedReader;
+// import java.io.File;
+// import java.io.FileReader;
+// import java.io.IOException;
+// import java.nio.file.Files;
+// import java.nio.file.Path;
+// import java.nio.file.Paths;
 
-/**
- * Test
- */
-public class Test {
+// /**
+//  * Test
+//  */
+// public class Test {
 
-    public static void main(String[] args) {
+//     public static void main(String[] args) {
         
-        BufferedReader reader;
- 
+        
+//         // System.setProperty("user.dir", "/home/messalih/Desktop/"); // cd
+//         // System.out.println(System.getProperty("user.dir")); // pwd
 
-		try {
-			reader = new BufferedReader(new FileReader("/home/messalih/Desktop/Java-Piscine-for-School-42/Module 02/test/signatures.txt"));
-			String line = reader.readLine();
+//         Path path = Paths.get("/home/messalih/Desktop/Java-Piscine-for-School-42/Module 02/ex02/");
+//         System.out.println(Files.isDirectory(path.toAbsolutePath()));
+//         // System.out.println(Files.exists(path));
 
-                
-            String lines[] =    line.split(", ");
-                
-            for (int lines2 = 0; lines2 < lines.length; lines2++) {
-                System.out.println(lines[lines2]);
+//         // System.setProperty("user.dir", "/home/messalih/Desktop/");
+        
+//     }
+// }
+
+
+import java.io.File;
+
+public class Test {
+    public static void main(String[] args) {
+        String directoryPath = ".";  // Replace with the path of the directory you want to list
+
+        File directory = new File(directoryPath);
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    System.out.println("File: " + file.getName() + " | Size: " + file.length() + " bytes");
+                } else if (file.isDirectory()) {
+                    System.out.println("Directory: " + file.getName() + " | Size: " + getDirectorySize(file) + " bytes");
+                }
             }
+        }
+    }
 
-			reader.close();
-		} catch (IOException e) {
-            System.out.println(e);
-			System.out.println("UNDEFINED");
-		}
+    private static long getDirectorySize(File directory) {
+        long size = 0;
+        File[] files = directory.listFiles();
 
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    size += file.length();
+                } else if (file.isDirectory()) {
+                    size += getDirectorySize(file);
+                }
+            }
+        }
+        return size;
     }
 }
