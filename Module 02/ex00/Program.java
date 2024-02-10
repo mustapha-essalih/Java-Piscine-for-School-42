@@ -43,13 +43,12 @@ public class Program {
             
             if (file.exists()) 
             {
-                FileInputStream inputStream = new FileInputStream(file);
+                FileInputStream inputStream = new FileInputStream(file);// beacsue we read binnary files like images 
                 byte[] allBytesOfFile = inputStream.readAllBytes();
                 String hex = bytesToHex(allBytesOfFile);
                 int i = 0;
                 for (Map.Entry<String, String> entry : signature.entrySet()) 
                 {
-                        
                     if(hex.startsWith(entry.getValue()))
                     {
                         String extention = entry.getKey() + '\n';
@@ -57,7 +56,7 @@ public class Program {
                             Path.of(resultFile.getName()), 
                             extention.getBytes(), 
                             StandardOpenOption.APPEND);
-                            i = 0;
+                        i = 0;
                         break;
                     }
 
@@ -83,7 +82,7 @@ public class Program {
         BufferedReader reader;
 
 		try {
-			reader = new BufferedReader(new FileReader("/home/messalih/Desktop/Java-Piscine-for-School-42/Module 02/ex00/signatures.txt"));
+			reader = new BufferedReader(new FileReader("/home/messalih/Desktop/Java-Piscine-for-School-42/Module 02/ex00/signatures.txt")); // read text file
 			String line = reader.readLine();
 
 			while (line != null) {
