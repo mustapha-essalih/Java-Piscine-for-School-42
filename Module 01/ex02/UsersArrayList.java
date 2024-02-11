@@ -8,7 +8,6 @@ public class UsersArrayList  implements UsersList {
 
     private User[] users;
     private Integer size;
-    private int i = 9;
 
 
     public UsersArrayList(){
@@ -19,13 +18,13 @@ public class UsersArrayList  implements UsersList {
     @Override
     public void addUser(User user) {
        
-        if (user == null) {
-            throw new UserNotFoundException("user id not found");
-        }
+        if (user != null) {
+            
+        
 
-        if (size == i) // capacity - 1
+        if (size == users.length) // capacity - 1
         {
-            int newSize = size + 6;
+            int newSize = size + (size / 2);
              
             User[] tempUsers = new User[newSize]; 
             
@@ -38,10 +37,10 @@ public class UsersArrayList  implements UsersList {
             for (int i = 0; i < size; i++) {
                 users[i] = tempUsers[i];
             }
-            i += 5;
         }
         users[size] =  user;
         size++;
+    }
     }
  
 
@@ -71,10 +70,10 @@ public class UsersArrayList  implements UsersList {
     }
     
     @Override
-    public Integer retrieveNumberOfUsers() {
+    public Integer getUsersCount() {
         return size;
     }
-    public Integer getSize() {
+    public Integer getCapacity() {
         return users.length;
     }
 
