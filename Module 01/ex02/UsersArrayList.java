@@ -19,28 +19,26 @@ public class UsersArrayList  implements UsersList {
     public void addUser(User user) {
        
         if (user != null) {
-            
-        
 
-        if (size == users.length) // capacity - 1
-        {
-            int newSize = size + (size / 2);
-             
-            User[] tempUsers = new User[newSize]; 
-            
-            for (int i = 0; i < size; i++) {
-                tempUsers[i] = users[i];
-            }
+            if (size == users.length) // capacity - 1
+            {
+                int newSize = size + (size / 2);
+                
+                User[] tempUsers = new User[newSize]; 
+                
+                for (int i = 0; i < size; i++) {
+                    tempUsers[i] = users[i];
+                }
 
-            users = new User[newSize];
-            
-            for (int i = 0; i < size; i++) {
-                users[i] = tempUsers[i];
+                users = new User[newSize];
+                
+                for (int i = 0; i < size; i++) {
+                    users[i] = tempUsers[i];
+                }
             }
+            users[size] =  user;
+            size++;
         }
-        users[size] =  user;
-        size++;
-    }
     }
  
 
@@ -73,9 +71,8 @@ public class UsersArrayList  implements UsersList {
     public Integer getUsersCount() {
         return size;
     }
+    
     public Integer getCapacity() {
         return users.length;
     }
-
-    
 }

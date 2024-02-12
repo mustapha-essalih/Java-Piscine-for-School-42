@@ -4,7 +4,6 @@
 public class User {
 
     private final Integer id;
-    
     private String   name;
     private int balance;
     
@@ -51,8 +50,12 @@ public class User {
     public String toString() {
         return "User [ id=" + this.id + " name=" + name + ", balance=" + balance + "]";
     }
+}
 
 
-    
+class UserNotFoundException extends RuntimeException {
 
+    public UserNotFoundException(String error){
+        super(error);
+    }    
 }

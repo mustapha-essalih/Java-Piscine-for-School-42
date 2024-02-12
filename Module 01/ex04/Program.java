@@ -19,9 +19,10 @@ public class Program {
 
         transactionsService.performTransfer(user1.getId(), user2.getId(), 50);
         user1.getTransactions().displayTransaction(); // same transacation id
+        System.out.println();
         user2.getTransactions().displayTransaction(); // same transacation id
     
-    
+        System.out.println();
 
         try {
             transactionsService.performTransfer(user1.getId(), user2.getId(), 22220);
@@ -35,6 +36,8 @@ public class Program {
         String t3 = transactionsService.performTransfer(user1.getId(), user2.getId(), 20);
         String t4 = transactionsService.performTransfer(user1.getId(), user2.getId(), 30);
     
+        System.out.println();
+
         {
             
             Transaction[] transfersOfuser = transactionsService.getTransfersForUser(user1.getId());
@@ -45,6 +48,7 @@ public class Program {
             
         }
 
+        System.out.println();
         transactionsService.deleteTransactionByID(user1.getId(), t1);
         
         {
@@ -57,20 +61,15 @@ public class Program {
             }
         }
         
-        transactionsService.deleteTransactionByID(user1.getId(), t1);
+        System.out.println();
+        
+        transactionsService.deleteTransactionByID(user1.getId(), t4);
         transactionsService.deleteTransactionByID(user2.getId(), t3);
 
-        transactionsService.checkValidityOfTransactions();         
+        Transaction[] unpaired = transactionsService.checkValidityOfTransactions();         
+        for (int i = 0; i < unpaired.length; i++) {
+            System.out.println(unpaired[i]);
+        }
     }
 }
-
-// / should return all unacknowledged transactions
-
-// get all users
-// get all transactions of user
-// each transactions has sender and recipent
-// loop on transactions of sender and recipent
-
-// evry user has transactions
-// evry transaction haas sender and reciver
-// transaction can have sender and can reciver missing or via vesca
+ 

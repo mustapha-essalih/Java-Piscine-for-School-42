@@ -2,17 +2,17 @@
 
 after intensive course covering Java Core topics such as Reflection API, Collections, JDBC, and Multi-Threading, extending to cover Spring and Sockets.
 
-Each repository contains day's subject.
+Each repository contains Module's subject.
 
-Days (individual projects)
+Modules (individual projects)
 
-Day 00: Structures and arrays
-Day 01: OOP and Collections
-Day 02: IO and Files
-Day 03: Threads
-Day 04: JAR
-Day 05: SQL and JDBC
-Day 06: JUnit and Mockito
-Day 07: Reflection
-Day 08: Spring
-Day 09: Sockets
+Module 00: Structures and arrays
+Module 01: OOP and Collections
+Module 02: IO and Files
+Module 03: Threads
+Module 04: JAR
+Module 05: SQL and JDBC
+Module 06: JUnit and Mockito
+Module 07: Reflection
+Module 08: Spring
+Module 09: Sockets

@@ -76,7 +76,7 @@ public class TransactionsService {
         
         TransactionsLinkedList unpairTransaction = new TransactionsLinkedList();
          
-        Integer numberOfUser = usersList.retrieveNumberOfUsers();
+        Integer numberOfUser = usersList.getUsersCount();
         for (int i = 0; i < numberOfUser; i++) 
         {
             User user = usersList.retrieveUserByIndex(i);

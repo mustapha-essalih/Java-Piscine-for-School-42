@@ -49,8 +49,4 @@ public class User {
     public String toString() {
         return "User [ id=" + this.id + " name=" + name + ", balance=" + balance + "]";
     }
-
-
-    
-
 }

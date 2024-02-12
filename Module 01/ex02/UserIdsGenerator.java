@@ -23,5 +23,4 @@ public class UserIdsGenerator {
         id++;
         return id;
     }
-    
 }

@@ -11,12 +11,12 @@ public class Program {
         
         if(args.length == 1 && args[0].equals("--profile=production"))
         {
-            Menu menu = new Menu(0);
+            Menu menu = new Menu(false);
             menu.callApp();
         } 
         else if(args.length == 1 && args[0].equals("--profile=dev"))
         {
-            Menu menu = new Menu(1);
+            Menu menu = new Menu(true);
             menu.callApp();
 
         }

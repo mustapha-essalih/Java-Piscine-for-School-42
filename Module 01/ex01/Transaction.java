@@ -1,5 +1,10 @@
 import java.util.UUID;
 
+enum TransferCategory{ // debit (outgoing) or credit (incoming).
+    debits,
+    credits
+}
+
 public class Transaction {
     
     private String identifier;
@@ -19,7 +24,6 @@ public class Transaction {
             {
                 if (tCategory == TransferCategory.debits) 
                 {
-                    
                     this.identifier = uuid.toString();
                     this.sender = sender;
                     this.recipient = recipient;
@@ -33,8 +37,6 @@ public class Transaction {
     }
     
     
-    
-    
     @Override
     public String toString() 
     {
@@ -44,9 +46,6 @@ public class Transaction {
         return sender.getName() + " -> " + recipient.getName() + ", -" + this.transferAmount + ", OUTCOME, " + this.identifier + "\n" +
             recipient.getName() + " -> " + sender.getName() + ", +" + this.transferAmount + ", INCOME, " + this.identifier ;
     }
-
-    
-    // add to string method
 }
 
 

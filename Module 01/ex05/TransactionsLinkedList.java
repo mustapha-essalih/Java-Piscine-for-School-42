@@ -3,6 +3,18 @@
  */
 public class TransactionsLinkedList implements TransactionsList {
 
+    class Node {
+        Transaction data;
+        public Node next, prev;
+    
+        Node(Transaction data) 
+        {
+            this.data = data;
+            next = null;
+            prev = null;
+        }
+    }
+
     private int size ;
 
     public TransactionsLinkedList(){

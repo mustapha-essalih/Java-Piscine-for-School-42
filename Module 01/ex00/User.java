@@ -3,13 +3,14 @@
  */
 public class User {
 
-    private static Integer identifier = 0;
+    private static Integer lastID = 0;
+    private  Integer identifier;
     private String   name;
     private Integer balance;
 
     public User( String name, Integer balance)
     {
-        User.identifier++;
+        identifier = lastID++;
         if (name == null || name.isEmpty()) 
             System.out.println("name cannot be null or empty");    
         else
@@ -20,7 +21,7 @@ public class User {
             this.balance = balance;
     }
 
-    public static Integer getIdentifier() {
+    public  Integer getIdentifier() {
         return identifier;
     }
  
@@ -46,10 +47,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [ id=" + User.identifier + " name=" + name + ", balance=" + balance + "]";
+        return "User [ id=" + identifier + " name=" + name + ", balance=" + balance + "]";
     }
-
-
-    
-
 }

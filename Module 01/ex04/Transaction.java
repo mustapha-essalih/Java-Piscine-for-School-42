@@ -1,5 +1,10 @@
 import java.util.UUID;
 
+enum TransferCategory{ // debit (outgoing) or credit (incoming).
+    debits,
+    credits
+}
+
 public class Transaction {
     
     private String identifier;
@@ -99,7 +104,16 @@ public class Transaction {
 
 
 
+class TransactionNotFoundException extends RuntimeException {
 
+    public TransactionNotFoundException(String error){
+        super(error);
+    } 
+}
 
-
- 
+class TransactionFailException extends RuntimeException{
+    
+    public TransactionFailException(String message){
+        super(message);
+    }
+}

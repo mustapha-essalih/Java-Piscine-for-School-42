@@ -51,7 +51,6 @@ public class TransactionsService {
         return transactionId;
     }
 
-    // A "transfer" here refers to a financial transaction, which could be a debit or credit transaction.
     public Transaction[] getTransfersForUser(Integer userId) {
 
         User user = usersList.retrieveUserByID(userId);
@@ -75,7 +74,7 @@ public class TransactionsService {
         
         TransactionsLinkedList unpairTransaction = new TransactionsLinkedList();
          
-        Integer numberOfUser = usersList.retrieveNumberOfUsers();
+        Integer numberOfUser = usersList.getUsersCount();
         for (int i = 0; i < numberOfUser; i++) 
         {
             User user = usersList.retrieveUserByIndex(i);
@@ -96,7 +95,7 @@ public class TransactionsService {
             }
 
         }
-        unpairTransaction.displayTransaction();
+        
         return unpairTransaction.transformTransactionToArray();
     }
 

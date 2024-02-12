@@ -7,11 +7,11 @@ import java.util.Scanner;
 public class Menu {
 
     private TransactionsService transactionsService;
-    int mod; 
+    boolean isDev; 
     private static Scanner scanner ;
-    public Menu(int mod)
+    public Menu(boolean isDev)
     {
-        this.mod = mod;
+        this.isDev = isDev;
         transactionsService = new TransactionsService();
     }
 
@@ -26,10 +26,8 @@ public class Menu {
 
     private void getInput() 
     {
-        boolean isErrorInput = true;
-
         this.displayMenu();
-        while (isErrorInput) {
+        while (true) {
   
             try {
                 scanner = new Scanner(System.in);
@@ -51,18 +49,26 @@ public class Menu {
                     while (this.displayAllTransactionsForUser() == false) {}
                     displayMenu();
                 }
-                else if(input == 5){
+                else if(input == 5 && isDev == true){
                     while (this.removeTransferByID() == false) {}
                     displayMenu();
                 }
-                else if(input == 6){
+                else if(input == 6 && isDev == true){
                     this.checkTransferValidity();
                     displayMenu();
+                }
+                else if(input == 5 && isDev == false)
+                    break;
+                else if( input == 7 && isDev == true){
+                    break;
+                }
+                else{
+                    System.out.println("ERROR");
+                    this.displayMenu(); 
                 }
             } 
             catch (Exception e) 
             {
-                System.out.println(e.getMessage());
                 System.out.println("ERROR");
                 this.displayMenu();              
             }
@@ -188,7 +194,7 @@ public class Menu {
         }
  
     } 
-    public boolean viewUserBalances() throws UserNotFoundException
+    public boolean viewUserBalances()
     {
         System.out.println("Enter a user ID");
         
@@ -250,7 +256,7 @@ public class Menu {
             "2. View user balances\n" +
             "3. Perform a transfer\n" +
             "4. View all transactions for a specific user" );
-        if(this.mod == 1)
+        if(this.isDev == true)
         {
             System.out.println("5. DEV - remove a transfer by ID\n" +
             "6. DEV - check transfer validity");

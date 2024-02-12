@@ -6,6 +6,18 @@
 
 public class TransactionsLinkedList implements TransactionsList {
 
+    class Node {
+        Transaction data;
+        public Node next, prev;
+    
+        Node(Transaction data) 
+        {
+            this.data = data;
+            next = null;
+            prev = null;
+        }
+    }
+
     private Node head;
     private Integer size = 0;
     
@@ -83,7 +95,6 @@ public class TransactionsLinkedList implements TransactionsList {
             node = node.next;
             i++;
         }
-
         return transactions;
     }
 }

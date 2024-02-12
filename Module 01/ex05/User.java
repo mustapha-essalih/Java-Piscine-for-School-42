@@ -58,8 +58,11 @@ public class User {
     public String toString() {
         return "User [ id=" + this.id + " name=" + name + ", balance=" + balance + "]";
     }
+}
 
+class UserNotFoundException extends RuntimeException {
 
-    
-
+    public UserNotFoundException(String error){
+        super(error);
+    }
 }
