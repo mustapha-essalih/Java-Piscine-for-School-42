@@ -1,35 +1,7 @@
 import java.util.Scanner;
 
-/**
- * AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWKFKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42
 
- 
- 
-counts[i] * 10 / maxCount
-
-36 * 10 / 36
-35 * 10 / 36
-27 * 10 / 36
-
-```java
-
-int maxCount = sortedCount[0];
-for (int i = 0; i < 10; i++) {
-    
-    System.out.println(sortedCount[i]);
-    int len = (sortedCount[i] * 10) / maxCount;
-    for (int j = 0; j < len; j++) {
-        System.out.println(" #");
-    }
-    System.out.print(" ");
-    break;
-}```
-
- */
 public class Program {
-    
-
-    // this program cannot handle emoji, because emoji in Supplementary Planes (Plane 1 to Plane 16)
 
     private static int[] charsDetected;
 
@@ -39,9 +11,8 @@ public class Program {
 
         String input = scanner.nextLine();
 
-        charsDetected = new int[65535]; // because we have 65535 in plane  The Basic Multilingual Plane (BMP) 
+        charsDetected = new int[65535];  
         short[] count = new short[65535];
-
 
         int i = 0;
 
@@ -53,7 +24,7 @@ public class Program {
                 charsDetected[c] = input.charAt(i);
             }
             if(count[c] != 999)
-                count[c]++; // increment value of the index c
+                count[c]++;  
             i++;
         }
 
@@ -65,10 +36,9 @@ public class Program {
 
     private static void displayResults(short[] sortedCount) {
         
-        // we calc the modulasse of the max count
         int maxCount = sortedCount[0];
 
-        for (int i = 10; i >= 0; i--) { // loop on 11 for print also the sortedCount[i]
+        for (int i = 10; i >= 0; i--) {  
             for (int j = 0; j < 10; j++) 
             {
                 if (sortedCount[j] * 10 / maxCount == i && sortedCount[j] > 0) 
@@ -94,12 +64,13 @@ public class Program {
                 charsDetected[i + 1] = temp;
             }
             System.out.printf("%3c ", charsDetected[i]);
-        }  
+        } 
+        System.out.println(); 
     }
 
     private static short[] sortCountValues(short[] count , int len , int[] charsDetected) {
 
-        short temp; // i dont use integer because allocate 4 bytes
+        short temp;  
         int t;
         for (int x = 0; x < count.length; x++)   
         { 
@@ -114,12 +85,8 @@ public class Program {
                     count[j] = temp;   
                     charsDetected[j] = t;   
                 }
-    
             }  
         }  
         return count;
-
     }
 }
-
-

@@ -18,7 +18,7 @@ class Program {
     {
         boolean flag = true;
 
-        if(number < 1)
+        if(number <= 1)
         {
             System.err.println("IllegalArgument");
             System.exit(-1);
@@ -41,11 +41,9 @@ class Program {
         int count = 0;
         int num;
 
-        System.out.print("-> ");
-
         while(true)
         {
-            if (!input.hasNextInt()) // cnt d end of input 
+            if (!input.hasNextInt()) 
             {
                 System.err.println("IllegalArgument");
                 input.close();
@@ -54,17 +52,12 @@ class Program {
 
             if (( num = input.nextInt()) == 42) 
                 break;
-
-            boolean ifIsPrime = isPrime(getSumOfDigits(num));
+            int sumOfDigits = getSumOfDigits(num);
+            boolean ifIsPrime = isPrime(sumOfDigits);
             if(ifIsPrime)
                 count++;
-            System.out.print("-> ");
         }
-
         System.out.println("Count of coffee-request : " + count);
         input.close();
     }
-
-
-
 }

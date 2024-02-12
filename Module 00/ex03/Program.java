@@ -3,21 +3,19 @@ import java.util.Scanner;
 
 class Program{
 
-
-
     public static void main(String[] args) {
          
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("-> ");
-
         String week;
         int weekNumber;
         
-        week = scanner.next();
+        if (scanner.hasNext()) 
+        {
+            week = scanner.next();
         
             int i = 0;
-            int total = 0;
+            long total = 0;
     
             while(!week.equals("42") && i < 18)
             {
@@ -27,8 +25,6 @@ class Program{
     
                     if(weekNumber == i + 1)
                     {
-                        System.out.print("-> ");
-                        
                         int  j = 0;
     
                         int smmalar = 9;
@@ -53,14 +49,13 @@ class Program{
                         }
      
                         total *= 10;
-                        total += smmalar;
+                        total += smmalar; // for make number next to number
                     }
                     else
                     {
                         System.err.println("IllegalArgument");
                         System.exit(-1);
                     }
-                    
                 }
                 else
                 {
@@ -68,24 +63,21 @@ class Program{
                     System.exit(-1);
                 }
                 i++;
-                System.out.print("-> ");
                 week = scanner.next();
             }
             
-            
-
-            int  reverse = 0;  
+            long  reverse = 0;  
             
             while(total > 0)   
             {  
-                int remainder = total % 10;  
+                long remainder = total % 10;  
                 
                 reverse = reverse * 10 + remainder;  
                 
-                total = total/10;  
+                total = total / 10;  
             }  
     
-            int result = 0;
+            long result = 0;
             i = 1;
             while (reverse > 0) 
             {
@@ -101,12 +93,8 @@ class Program{
                 }
                 reverse = reverse / 10;    
                 System.out.println(">");
-            }
-            
-            
-            scanner.close();
+            }       
         }
-
-       
-
+        scanner.close();
+    }
 }

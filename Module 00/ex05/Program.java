@@ -18,10 +18,8 @@ public class Program {
     public static void main(String[] args) 
     {
         getListOfStudents();    
-
         getClasses();
         createAttendance();
-        
         printTable();
     }
 
@@ -38,6 +36,13 @@ public class Program {
             String studentName = getStudentName(numberOfStudents , scanner );
             if(studentName == null)
                 break;
+            while (studntNameExist(studentName)) {
+                System.out.println("ERROR");
+                studentName = getStudentName(numberOfStudents , scanner );
+                if (studentName == null) {
+                    return;
+                }
+            }    
             listOfStudents[numberOfStudents] = studentName;
             numberOfStudents++;             
         }
@@ -59,14 +64,12 @@ public class Program {
         classes = new boolean[30][6];
          
         numberOfClasses = 0;
-        System.out.print("-> ");
         while (!(input = scanner.nextLine()).equals("."))  
         {
             
             while (input.length() == 0) // if just enter enter
             {
-                System.out.println("you entered empty arg");
-                System.out.print("-> ");
+                System.out.println("ERROR");
                 input = scanner.nextLine();
                 if (input.equals(".")) 
                     return ;    
@@ -90,8 +93,10 @@ public class Program {
                 numberOfClasses++;   
 
             if(numberOfClasses == 10)
-                break;
-            System.out.print("-> ");
+            {
+                System.out.println(".");
+                return;
+            }
         }
     }
 
@@ -106,16 +111,14 @@ public class Program {
 
         attendance = new int[30][6][numberOfStudents];
         
-        Scanner scanner = new Scanner(System.in); // split by scanner
+        Scanner scanner = new Scanner(System.in);  
         
-        System.out.print("-> ");
         //  inifinite loop because can user want to edit status of attendace
         while (!(input = scanner.nextLine()).equals(".")) 
         {
             while (input.length() == 0) // if just enter enter
             {
-                System.out.println("you entered empty arg");
-                System.out.print("-> ");
+                System.out.println("ERROR");
                 input = scanner.nextLine();
                 if (input.equals(".")) 
                     return ;    
@@ -128,7 +131,6 @@ public class Program {
             date = checkIfDayIsExistInWeek(toDigit(strDate) , time);
             indexOfStudnet = getIndexOfStudent(nameOfStudent);
             status = getStatus(strStatus);
-            
              
             while (indexOfStudnet == -1 || time == -1 || date == -1 || status == 0 ) 
             {
@@ -139,18 +141,11 @@ public class Program {
                 status = getStatus(strStatus);
             }
             attendance[date][time - 1][indexOfStudnet] = status;
-            System.out.print("-> ");
-             
         }
     }
 
     private static int fillClasses(int time , int indexOfDay , int numberOfClasses)
     {
-        // start of the month is TU is 1
-        // get first day in moth entered by user : MO , so monday her calue is 7 
-        // index of monday in week is 0
-        
-        // we search for index of day entered by user in table to fill all days in  month 
         int startDayOfMonth = 1; // TU it is the start day in septembere 2020
         int firstDayOfMonth;
         
@@ -169,7 +164,6 @@ public class Program {
             else    
             {
                 classes[i][time - 1] = true;   
-                 
                 numberOfClasses++; // because increment 4 times
             }
         }
@@ -211,9 +205,7 @@ public class Program {
                 }    
             }
             System.out.println();
-
         }
-
     }
 
     private static void inputClassesFromUser(Scanner splitedInput, Scanner scanner , int size) 
@@ -230,15 +222,13 @@ public class Program {
            
             else if (hasNext && i == size) 
             {
-                System.out.println("you entred > " + size + " args.");    
-                System.out.print("-> ");
+                System.out.println("ERROR");    
                 input = scanner.nextLine();
                 if (input.equals(".")) 
                     return ;
                 while (input.length() == 0) // if just enter enter
                 {
-                    System.out.println("you entered empty arg");
-                    System.out.print("-> ");
+                    System.out.println("ERROR");
                     input = scanner.nextLine();
                     if (input.equals(".")) 
                         return ;    
@@ -248,16 +238,14 @@ public class Program {
             }
             else if (!hasNext && i < size) 
             {
-                System.out.println("you entred < " + size + " args.");    
+                System.out.println("ERROR");    
 
-                System.out.print("-> ");
                 input = scanner.nextLine();
                 if (input.equals(".")) 
                     return ;
                 while (input.length() == 0) // if just enter enter
                 {
-                    System.out.println("you entered empty arg");
-                    System.out.print("-> ");
+                    System.out.println("ERROR");
                     input = scanner.nextLine();
                     if (input.equals(".")) 
                         return ;    
@@ -283,8 +271,6 @@ public class Program {
     }
     
 
-
-
     private static String getStudentName(int numberOfStudents ,Scanner scanner) 
     {
         String input;
@@ -292,31 +278,27 @@ public class Program {
 
         
         studentName = null;
-        System.out.print("-> ");
         if (!(input = scanner.nextLine()).equals(".") && numberOfStudents < 10)  
         {
             while (input.length() == 0) // if just enter enter
             {
-                System.out.println("you entered empty arg");
-                System.out.print("-> ");
+                System.out.println("ERROR");
                 input = scanner.nextLine();
                 if (input.equals(".")) 
                     return null;    
             }
             
-            Scanner splitedInput = new Scanner(input).useDelimiter("\\s+");
+            Scanner splitedInput = new Scanner(input).useDelimiter("\\s+"); // split by one or more then one space ( space and tab)
             studentName = splitedInput.next();
             while (splitedInput.hasNext() || studentName.length() > 10 ) // if enter > string or studnet name len > 10
             {
-                System.out.println("enterd gereter then one arg or student len > 10");
-                System.out.print("-> ");
+                System.out.println("ERROR");
                 input = scanner.nextLine();
                 if (input.equals(".")) 
                     return null; 
                 while (input.length() == 0) 
                 {
-                    System.out.println("you entered empty arg");
-                    System.out.print("-> ");
+                    System.out.println("ERROR");
                     input = scanner.nextLine();
                     if (input.equals(".")) 
                         return null; 
@@ -333,7 +315,7 @@ public class Program {
     {
         if (date < 1 || date > 30) 
         {
-            System.out.println("date should be > 1 and < 30 ");    
+            System.out.println("ERROR");    
             return -1;
         }
         
@@ -409,6 +391,15 @@ public class Program {
             return -1;
         }
         return 0;
+    }
+
+    private static boolean studntNameExist(String name){
+        for (int i = 0; i < numberOfStudents; i++) {
+            if (listOfStudents[i].equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

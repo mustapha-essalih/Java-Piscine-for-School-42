@@ -10,18 +10,16 @@ class Program{
         
         Scanner input = new Scanner(System.in);
 
-        System.out.print("-> ");
-        if (input.hasNextInt()) {
-            
+        if (input.hasNextInt()) 
+        {    
             int number = input.nextInt();
     
-            if(number < 1)
+            if(number <= 1)
             {
                 System.err.println("IllegalArgument");
                 input.close();
                 System.exit(-1);
             }
-    
              
             for (int i = 2; i * i <= number; i++) 
             {
