@@ -1,7 +1,6 @@
 # Java-Piscine-for-School-42
 
 after intensive course covering Java Core topics such as Reflection API, Collections, JDBC, and Multi-Threading, extending to cover Spring and Sockets.
-
 Each repository contains Module's subject.
 
 Modules (individual projects)
