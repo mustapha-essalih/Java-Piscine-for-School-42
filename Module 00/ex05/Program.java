@@ -167,7 +167,6 @@ public class Program {
                 numberOfClasses++; // because increment 4 times
             }
         }
-        
         return numberOfClasses == 4 ? 1 : 0;
     }
 
@@ -253,7 +252,6 @@ public class Program {
                 splitedInput = new Scanner(input).useDelimiter("\\s+");
                 i = -1;
             }
-
             i++;
         }
         if (size == 2) 
@@ -401,5 +399,4 @@ public class Program {
         }
         return false;
     }
-
 }
