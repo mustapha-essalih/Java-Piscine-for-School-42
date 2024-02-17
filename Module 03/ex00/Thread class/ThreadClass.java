@@ -16,7 +16,7 @@ public class ThreadClass extends Thread {
     public void run()
     {
         for(int i = 0; i < count ; i++)
-            System.out.println("#thread " +  this.name + " in Running state");
+            System.out.println("this.name");
     }
 
     

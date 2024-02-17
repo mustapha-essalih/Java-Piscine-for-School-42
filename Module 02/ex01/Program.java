@@ -30,16 +30,15 @@ public class Program { // it handle unicode and imogies...
                 stringBuilderA = new StringBuilder(); // daynamic string
                 stringBuilderB = new StringBuilder(); // daynamic string
                 
-                if(getBufferOfFile(args) == false)
+                if(getBufferOfFile(args) == false) // check if files are empty or one of them
                 {
                     return;
                 }
-                
                  
                 Set<String>  dictionary = getDictionary(bufferOfFileA , bufferOfFileB);
                 
-                Vector<Integer> vectorA = getVectorLenght(dictionary.size() , 0 , dictionary);
-                Vector<Integer> vectorB =  getVectorLenght(dictionary.size(), 1 , dictionary);
+                Vector<Integer> vectorA = getVectorLenght(dictionary.size() , false , dictionary);
+                Vector<Integer> vectorB =  getVectorLenght(dictionary.size(), true , dictionary);
 
                 Integer numerator = getNumerator(vectorA , vectorB);
                 if (numerator == 0) {
@@ -104,14 +103,13 @@ public class Program { // it handle unicode and imogies...
 
 
 
-    private static Vector<Integer> getVectorLenght(int length, int i ,Set<String> dictionary) throws IOException{
+    private static Vector<Integer> getVectorLenght(int length, boolean flag ,Set<String> dictionary) throws IOException{
         
         Vector<Integer> vector = new Vector<>(length);
-        String line;
  
         for(String value : dictionary)
         {
-            if (i == 0) {
+            if (flag == false) {
                 
                 Integer counter = countWord(stringBuilderA.toString().split(" "), value);
                 vector.add(counter);

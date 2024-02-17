@@ -3,16 +3,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.security.KeyFactory;
-import java.security.PublicKey;
-import java.security.Signature;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -36,9 +29,9 @@ public class Program {
 
         File resultFile = new File("result.txt");
         resultFile.createNewFile();
-
-        while (!(filePath = scanner.nextLine()).equals("42")) {
-            
+        
+        while (scanner.hasNext() && !(filePath = scanner.nextLine()).equals("42")) 
+        { 
             File file = new File(filePath);
             
             if (file.exists()) 
@@ -46,7 +39,7 @@ public class Program {
                 FileInputStream inputStream = new FileInputStream(file);// beacsue we read binnary files like images 
                 byte[] allBytesOfFile = inputStream.readAllBytes();
                 String hex = bytesToHex(allBytesOfFile);
-                int i = 0;
+                boolean isFound = false;
                 for (Map.Entry<String, String> entry : signature.entrySet()) 
                 {
                     if(hex.startsWith(entry.getValue()))
@@ -55,13 +48,12 @@ public class Program {
                         Files.write(
                             Path.of(resultFile.getName()), 
                             extention.getBytes(), 
-                            StandardOpenOption.APPEND);
-                        i = 0;
+                            StandardOpenOption.APPEND); 
+                        isFound = true;
                         break;
                     }
-
                 }
-                if(i == 1)
+                if(isFound == false)
                 {
                     System.out.println("UNDEFINED");
                 }
@@ -73,6 +65,7 @@ public class Program {
                 System.out.println("UNDEFINED");
             }
         }
+        scanner.close();
     }
 
     private static Map<String, String> getKeyValueOfSignature() {
@@ -82,7 +75,7 @@ public class Program {
         BufferedReader reader;
 
 		try {
-			reader = new BufferedReader(new FileReader("/home/messalih/Desktop/Java-Piscine-for-School-42/Module 02/ex00/signatures.txt")); // read text file
+			reader = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/signatures.txt")); // read text file
 			String line = reader.readLine();
 
 			while (line != null) {

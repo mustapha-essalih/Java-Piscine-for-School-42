@@ -29,7 +29,7 @@ public class Program {
                     scanner = new Scanner(System.in);
                     String input;
 
-                    while (!(input = scanner.nextLine()).equals("exit")) 
+                    while (scanner.hasNext() && !(input = scanner.nextLine()).equals("exit")) 
                     {
                         String[] command = input.split("\\s+");
                         if (command.length > 3) {
@@ -37,8 +37,6 @@ public class Program {
                         }
                         else  
                         {
-                            // cd ../folder2
-                            // cd folder2
                             if (command[0].equals("cd") && command.length == 2) 
                             {
                                 cd(command[1]);
@@ -126,7 +124,8 @@ public class Program {
 
         File[] files = directory.listFiles();
 
-        if (files != null) {
+        if (files != null) 
+        {
             for (File file : files) {
                 if (file.isFile()) 
                     displayDirSize(file.length() , file);
@@ -171,8 +170,6 @@ public class Program {
     {
         String relativePath = System.getProperty("user.dir");
         Path path = Paths.get(relativePath + "/" + source);
-        
-        
 
         if (new File(path.toString()).isDirectory()) {// if dir found
             System.setProperty("user.dir", path.toAbsolutePath().toString());
