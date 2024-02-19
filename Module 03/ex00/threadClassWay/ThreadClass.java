@@ -1,3 +1,6 @@
+/**
+ * ThreadClass
+ */
 public class ThreadClass extends Thread {
 
     private String name;
@@ -9,14 +12,10 @@ public class ThreadClass extends Thread {
         this.count = count;
     }
 
-
-    
     @Override
-    public synchronized void run()
+    public void run()
     {
         for(int i = 0; i < count ; i++)
-            System.out.println(this.name);
+            System.out.println( this.name );
     }
-
-    
 }

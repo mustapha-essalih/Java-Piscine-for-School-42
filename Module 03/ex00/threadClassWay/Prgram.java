@@ -1,10 +1,11 @@
 /**
- * Program
+ * Prgram
  */
-public class Program {
+public class Prgram {
 
     public static void main(String[] args) {
         
+
         if(args.length == 1)
         {
             if(args[0].startsWith("--count="))
@@ -22,7 +23,7 @@ public class Program {
                         egg.start();
                         hen.start();
 
-                        egg.join();//pause the current thread execution (main thread) until finished eg thread
+                        egg.join();//pause the current thread execution (main thread) until finished
                         hen.join();
 
                         human.start();
@@ -44,6 +45,7 @@ public class Program {
         {
             System.out.println("should pass one argument like --count=10");
         }
+
     }
-    
+
 }
