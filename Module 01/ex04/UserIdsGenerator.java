@@ -3,19 +3,19 @@
  */
 public class UserIdsGenerator {
 
-    // The single instance of the class
     private static UserIdsGenerator instance; 
-    private Integer id = 0;
+    private Integer id;
 
     // Private constructor to prevent instantiation from outside
-    private UserIdsGenerator(){}
+    private UserIdsGenerator()
+    {
+        id = 0;
+    }
 
-    // Method to get the instance of the Singleton class
     public static UserIdsGenerator getInstance(){
 
-        if (instance == null) 
+        if (instance == null) // for first time
             instance = new UserIdsGenerator();
-
         return instance;
     }
 
@@ -23,5 +23,4 @@ public class UserIdsGenerator {
         id++;
         return id;
     }
-    
 }

@@ -4,10 +4,13 @@
 public class UserIdsGenerator {
 
     private static UserIdsGenerator instance; 
-    private Integer id = 0;
+    private Integer id;
 
     // Private constructor to prevent instantiation from outside
-    private UserIdsGenerator(){}
+    private UserIdsGenerator()
+    {
+        id = 0;
+    }
 
     public static UserIdsGenerator getInstance(){
 

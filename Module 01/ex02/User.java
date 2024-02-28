@@ -3,14 +3,15 @@
  */
 public class User {
 
-    private final Integer id;
+    private final Integer ID;
+    
     private String   name;
     private int balance;
     
     
     public User( String name, int balance)
     {
-        id = UserIdsGenerator.getInstance().generateId();;
+        ID = UserIdsGenerator.getInstance().generateId();;
         if (name == null || name.isEmpty()) 
             System.out.println("name cannot be null or empty");    
         else
@@ -20,7 +21,10 @@ public class User {
         else
             this.balance = balance;
     }
-
+    
+    public Integer getId() {
+        return ID;
+    }
 
     public String getName() {
         return name;
@@ -41,14 +45,9 @@ public class User {
             this.balance = balance;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-
     @Override
     public String toString() {
-        return "User [ id=" + this.id + " name=" + name + ", balance=" + balance + "]";
+        return "User [ id=" + this.ID + " name=" + name + ", balance=" + balance + "]";
     }
 }
 

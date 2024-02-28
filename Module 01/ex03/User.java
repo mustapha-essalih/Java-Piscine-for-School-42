@@ -3,14 +3,14 @@
  */
 public class User {
 
-    private final Integer id;
+    private final Integer ID;
     private String  name;
     private int balance;
     private TransactionsList transactionsList =  new TransactionsLinkedList();
 
     public User( String name, int balance)
     {
-        id = UserIdsGenerator.getInstance().generateId();;
+        ID = UserIdsGenerator.getInstance().generateId();;
         if (name == null || name.isEmpty()) 
             System.out.println("name cannot be null or empty");    
         else
@@ -45,13 +45,13 @@ public class User {
     }
 
     public Integer getId() {
-        return id;
+        return ID;
     }
 
 
     @Override
     public String toString() {
-        return "User [ id=" + this.id + " name=" + name + ", balance=" + balance + "]";
+        return "User [ id=" + this.ID + " name=" + name + ", balance=" + balance + "]";
     }
 }
 

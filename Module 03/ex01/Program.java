@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 
 public class Program {
-    public static void main(String[] args) throws InterruptedException {
-        
-         
+    public static void main(String[] args) throws InterruptedException 
+    {     
         if(args.length == 1)
         {
             if(args[0].startsWith("--count="))

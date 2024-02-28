@@ -97,9 +97,6 @@ public class Transaction {
         return sender.getName() + " -> " + recipient.getName() + ", -" + this.transferAmount + ", OUTCOME, " + this.identifier + "\n" +
             recipient.getName() + " -> " + sender.getName() + ", +" + this.transferAmount + ", INCOME, " + this.identifier ;
     }
-
-    
-    // add to string method
 }
 
 
